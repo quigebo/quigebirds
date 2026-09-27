@@ -2,6 +2,87 @@
 
 <!-- version list -->
 
+## v0.26.0 (2026-09-27)
+
+### Chores
+
+- Add CODEOWNERS so PRs request my review
+  ([`f31aa96`](https://github.com/quigebo/quigebirds/commit/f31aa966fa93ebc3770f4b1b7e7a4d097206d355))
+
+- Update from the quigebirds repo
+  ([`a29c016`](https://github.com/quigebo/quigebirds/commit/a29c016172ae714e5c3854bd46869c3176c569a0))
+
+- **assets**: #33 add 3 variants of Anna's Hummingbird
+  ([#165](https://github.com/quigebo/quigebirds/pull/165),
+  [`c690191`](https://github.com/quigebo/quigebirds/commit/c6901913ce4d4d1dcd7085a1f1b61f86069dc2bb))
+
+- **assets**: #33 add Anna's Hummingbird ([#165](https://github.com/quigebo/quigebirds/pull/165),
+  [`c690191`](https://github.com/quigebo/quigebirds/commit/c6901913ce4d4d1dcd7085a1f1b61f86069dc2bb))
+
+- **assets**: #33 add Canyon Wren and Spotted Towhee
+  ([#157](https://github.com/quigebo/quigebirds/pull/157),
+  [`55f1d5d`](https://github.com/quigebo/quigebirds/commit/55f1d5dca1c77840571c82bdf6ad4063226d5a24))
+
+- **assets**: #33 add Chestnut-backed Chickadees
+  ([#163](https://github.com/quigebo/quigebirds/pull/163),
+  [`fdccb43`](https://github.com/quigebo/quigebirds/commit/fdccb4330c0f496b7190aa68e5e35aae1d37e27d))
+
+- **assets**: #33 add Hairy Woodpecker variant
+  ([#164](https://github.com/quigebo/quigebirds/pull/164),
+  [`8234722`](https://github.com/quigebo/quigebirds/commit/8234722c47b47ef275e53c053d44f1af77a0ee9c))
+
+- **assets**: #44 add 11 European species ([#160](https://github.com/quigebo/quigebirds/pull/160),
+  [`81fffae`](https://github.com/quigebo/quigebirds/commit/81fffae479062fa05addb11fb78d24e0338bf69c))
+
+- **assets**: Add 2 Australian sacred kingfisher variants
+  ([#168](https://github.com/quigebo/quigebirds/pull/168),
+  [`3ded976`](https://github.com/quigebo/quigebirds/commit/3ded976dff54f106ad8b9c07dd1b200ddc5c5f4c))
+
+- **assets**: Add 5 Shenzhen birds
+  ([`b8b667d`](https://github.com/quigebo/quigebirds/commit/b8b667d1a85f9e4cf974cf194eea9c6629efb308))
+
+- **assets**: Add 6 South African species ([#158](https://github.com/quigebo/quigebirds/pull/158),
+  [`18863a2`](https://github.com/quigebo/quigebirds/commit/18863a2be78add61a9945799be2c7305ce11d2c3))
+
+- **assets**: Add Australian sacred kingfisher
+  ([#168](https://github.com/quigebo/quigebirds/pull/168),
+  [`3ded976`](https://github.com/quigebo/quigebirds/commit/3ded976dff54f106ad8b9c07dd1b200ddc5c5f4c))
+
+- **assets**: Add Pacific Koel ([#162](https://github.com/quigebo/quigebirds/pull/162),
+  [`8531d84`](https://github.com/quigebo/quigebirds/commit/8531d8402d1d8a1e769b7f7d5678f26cf9b8a93b))
+
+- **assets**: Add Red-Tailed Black Cockatoo ([#167](https://github.com/quigebo/quigebirds/pull/167),
+  [`4c52503`](https://github.com/quigebo/quigebirds/commit/4c52503b0cdc14730e1fdad71d4ba717c924874e))
+
+- **assets**: Merge source keys into one per author
+  ([`e476a8c`](https://github.com/quigebo/quigebirds/commit/e476a8c2a9b6a5661939b6757fdf7341d6555d6b))
+
+- **render**: #138 tone the panel's paper so white birds read on e-ink
+  ([`97c392d`](https://github.com/quigebo/quigebirds/commit/97c392d22b60d8f8b697e58b2363a3f781f27401))
+
+### Documentation
+
+- Ask for small artwork PRs and drop the manual preview
+  ([`eeec29b`](https://github.com/quigebo/quigebirds/commit/eeec29bf558be3a93af062516e20c4cbe70dcfaa))
+
+- Refresh the art count and regional coverage
+  ([`3fdc4c4`](https://github.com/quigebo/quigebirds/commit/3fdc4c4ba2726b000fe03e7de08660a434958adc))
+
+- **showcase**: Add a frame in London, shared by @katebevan in #146
+  ([`0cb4f3d`](https://github.com/quigebo/quigebirds/commit/0cb4f3d8ef29be519f8ac39670344aa24816a070))
+
+- **species**: Sort by how common a bird is and link Wikipedia
+  ([`952a33b`](https://github.com/quigebo/quigebirds/commit/952a33badbaaf096419755f96e0a1e8875df5879))
+
+### Features
+
+- **panel**: Drive the Waveshare 13.3" e-Paper HAT+ (E)
+  ([`4fbcbf5`](https://github.com/quigebo/quigebirds/commit/4fbcbf599913a993568cc671d067f3c37f08074b))
+
+- **render**: Set a label's second language smaller
+  ([`f560b63`](https://github.com/quigebo/quigebirds/commit/f560b630b2427ee059ed76097bceb9b81154f3a5))
+
+
 ## v0.25.1 (2026-09-25)
 
 ### Bug Fixes
