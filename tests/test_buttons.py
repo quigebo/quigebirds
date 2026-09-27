@@ -24,6 +24,11 @@ def test_the_13_3_moves_button_c():
     assert pins_for("inky.inky_ac073tc1a") == (5, 6, 16, 24)
 
 
+def test_the_waveshare_has_no_buttons_to_claim():
+    # 24 is its BUSY line; requesting it as a button would fight the driver.
+    assert pins_for("fugleramme.waveshare") == ()
+
+
 def test_a_walks_the_modes_and_wraps(images_dir):
     settings = Settings()
     seen = []

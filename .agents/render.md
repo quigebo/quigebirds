@@ -14,6 +14,7 @@ Covers `service.py`, `panel.py`, `buttons.py` and the `render/` package.
 - The admin resolution setting picks the kiosk's **height**. Locked to the panel (`web_lock`, the default), `settings.web_size` takes the width from the panel's aspect; unlocked, or with no panel, the kiosk takes its own shape from `web_aspect` and `web_portrait` and ignores the rotation (the admin dims Rotation when there is no panel). The collage packs into whatever rectangle it is handed, so a different shape is a different page, not a scaled one: the birds land elsewhere. The admin preview shows the panel's page when there is a panel, the kiosk's when there is none.
 - `settings.rotation` (counter-clockwise) shapes the panel and a locked kiosk, but only `push` turns pixels - the driver takes native landscape only.
 - `inky.set_image` re-dithers anything that is not already a 6-color "P" image, so `render.dither.dither` must hand it a palette mapping 1:1 onto the driver's. `tests/test_panel.py` pins this.
+- A Waveshare 13.3" e-Paper HAT+ (E) is the same glass behind Waveshare's vendor driver. `waveshare.py` wraps it as an Inky-shaped device (landscape `resolution`, `set_image`/`show`) and packs our dithered indices straight into the controller's codes, so the vendor's own re-dithering `getbuffer` is never called. It is chosen whenever `vendor/fetch-waveshare.sh` has put the driver in `vendor/waveshare/`: the HAT has no EEPROM to probe, and with no panel wired its driver waits on BUSY forever. `tests/test_waveshare.py` pins the packing.
 
 ## The render package
 
@@ -44,6 +45,6 @@ Covers `service.py`, `panel.py`, `buttons.py` and the `render/` package.
 
 ## The buttons are settings writes (`buttons.py`)
 
-- Plain GPIO read with `gpiod` on a daemon thread; pins key off `Panel.driver` (the 13.3" moves C to line 25).
+- Plain GPIO read with `gpiod` on a daemon thread; pins key off `Panel.driver` (the 13.3" moves C to line 25). The Waveshare has no buttons and gets none: its BUSY line is 24.
 - A press only ever calls `SettingsStore.update`, so nothing crosses threads and presses during a refresh coalesce.
 - A cycles display modes, B toggles names, C rotates a quarter turn clockwise, and D walks styles.

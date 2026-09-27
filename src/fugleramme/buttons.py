@@ -29,6 +29,8 @@ _DEBOUNCE = timedelta(milliseconds=50)
 
 def pins_for(driver: str) -> tuple[int, ...]:
     """Button lines for a panel, keyed on its driver module."""
+    if "waveshare" in driver:
+        return ()  # no buttons, and 24 is its BUSY line
     return _PINS_13_3 if "el133uf1" in driver else _PINS
 
 
@@ -65,6 +67,10 @@ def press(label: str, store: SettingsStore, images_dir: Path) -> None:
 
 def watch(driver: str, store: SettingsStore, images_dir: Path) -> None:
     """Block on button edges forever. Returns at once if the GPIO lines are unusable."""
+    pins = pins_for(driver)
+    if not pins:
+        log.info("Panel has no buttons")
+        return
     try:
         import gpiod
         import gpiodevice
@@ -73,7 +79,6 @@ def watch(driver: str, store: SettingsStore, images_dir: Path) -> None:
         log.warning("gpiod unavailable (%s); running without buttons", exc)
         return
 
-    pins = pins_for(driver)
     try:
         chip = gpiodevice.find_chip_by_platform()
         offsets = [chip.line_offset_from_id(pin) for pin in pins]

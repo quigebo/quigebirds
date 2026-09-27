@@ -16,6 +16,7 @@ import logging
 
 from PIL import Image
 
+from . import waveshare
 from .config import FALLBACK_PANEL_RESOLUTION
 
 log = logging.getLogger(__name__)
@@ -41,7 +42,7 @@ class Panel:
         if image.size != self.resolution:
             raise ValueError(f"image is {image.size}, panel is {self.resolution}")
         self._device.set_image(image)
-        self._device.show()  # blocks ~35s on the 13.3" while the panel refreshes
+        self._device.show()  # blocks ~20-35s on a 13.3" while the panel refreshes
 
 
 def resolution_of(panel: Panel | None) -> tuple[int, int]:
@@ -50,7 +51,16 @@ def resolution_of(panel: Panel | None) -> tuple[int, int]:
 
 
 def init_panel() -> Panel | None:
-    """Return a Panel, or None if no Inky is available (web-only mode)."""
+    """Return a Panel, or None if no panel is available (web-only mode)."""
+    if waveshare.available():  # fetched on purpose, so it wins over probing for an Inky
+        try:
+            device = waveshare.load()
+        except Exception as exc:
+            log.warning("Waveshare driver unusable (%s); running web-only", exc)
+            return None
+        panel = Panel(device)
+        log.info("Waveshare panel initialised: %sx%s", *panel.resolution)
+        return panel
     try:
         from inky.auto import auto
     except Exception as exc:  # library not installed (dev loop)

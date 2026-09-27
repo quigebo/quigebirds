@@ -39,3 +39,6 @@ tools/platereview/review*/
 # under .claude/skills are checked in, so the folder is ignored a child at a time.
 .claude/*
 !.claude/skills/
+
+# Waveshare panel driver, fetched per Pi by vendor/fetch-waveshare.sh
+vendor/waveshare/
