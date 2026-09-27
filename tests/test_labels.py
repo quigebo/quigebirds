@@ -64,13 +64,23 @@ def test_a_second_language_stacks_centred_under_the_first():
     one = text_mask("Svarttrost", font, flat=True)
     two = text_mask("Svarttrost\n(Turdus merula)", font, flat=True)
 
-    assert two.height > one.height * 2  # two lines plus the leading between them
+    assert two.height > one.height * 1.5  # a smaller second line plus the leading
     assert two.width > one.width  # the wider line sets the box
 
     rows = np.asarray(two).any(axis=1)
     inked = rows.nonzero()[0]
     assert not rows[inked.min() : inked.max()].all()  # blank rows separate the lines
     assert np.asarray(two).nonzero()[1].mean() == pytest.approx(two.width / 2, abs=2)
+
+
+def test_a_second_language_is_set_smaller():
+    font = fonts.load(fonts.DEFAULT_FONT, 26)
+    two = np.asarray(text_mask("Turdus merula\nTurdus merula", font, flat=True))
+
+    rows = two.any(axis=1)
+    gap = rows.nonzero()[0][np.argmax(~rows[rows.argmax() :]) + rows.argmax()]
+    first, second = two[:gap], two[gap:]
+    assert second.any(axis=0).sum() < first.any(axis=0).sum() * 0.85
 
 
 def test_label_size_scales_with_the_short_side():

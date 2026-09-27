@@ -22,6 +22,7 @@ PANEL_INK = (0, 0, 0)  # exact palette black: the dither leaves it alone
 MIN_LABEL_PX = 11
 _CUTOFF = 110  # alpha threshold when flattening text for the panel
 _LINE_SPACING = 0.1  # extra leading between a label's two lines, em
+_SECOND_SCALE = 0.75  # a second language's size, of the first's
 _PERCH_FILL = 0.7  # of the page's short side
 
 
@@ -47,19 +48,31 @@ def fit(img: Image.Image, box: tuple[int, int]) -> Image.Image:
 
 def text_mask(text: str, font: ImageFont.FreeTypeFont, flat: bool) -> Image.Image:
     """Text as an "L" alpha mask, +1px so the italic's overhang is not shaved.
-    Newlines stack centred (a second language) on the text layout's own
-    baselines - separately trimmed masks would sit unevenly. Flat drops the
-    antialiasing, which would otherwise dither into colour speckle."""
+    Newlines stack centred (a second language), set `_SECOND_SCALE` smaller, on
+    baselines spaced by the fonts' own metrics - separately trimmed masks would
+    sit unevenly. Flat drops the antialiasing, which would otherwise dither into
+    colour speckle."""
+    second = font.font_variant(size=max(1, round(font.size * _SECOND_SCALE)))
+    lines = [(line, font if i == 0 else second) for i, line in enumerate(text.split("\n"))]
     spacing = round(font.size * _LINE_SPACING)
     measure = ImageDraw.Draw(Image.new("L", (1, 1)))
-    x0, y0, x1, y1 = measure.multiline_textbbox(
-        (0, 0), text, font=font, spacing=spacing, align="center"
-    )
-    # Ceil: a multi-line bbox is fractional, and a short box shaves the text.
+    baselines: list[int] = []
+    y = 0
+    for _, f in lines:
+        ascent, descent = f.getmetrics()
+        baselines.append(y + ascent)
+        y += ascent + descent + spacing
+    boxes = [
+        measure.textbbox((0, y), line, font=f, anchor="ms")
+        for (line, f), y in zip(lines, baselines, strict=True)
+    ]
+    x0, y0 = min(b[0] for b in boxes), min(b[1] for b in boxes)
+    x1, y1 = max(b[2] for b in boxes), max(b[3] for b in boxes)
+    # Ceil: a bbox can be fractional, and a short box shaves the text.
     mask = Image.new("L", (math.ceil(x1 - x0) + 2, math.ceil(y1 - y0) + 2), 0)
-    ImageDraw.Draw(mask).multiline_text(
-        (1 - x0, 1 - y0), text, font=font, fill=255, spacing=spacing, align="center"
-    )
+    draw = ImageDraw.Draw(mask)
+    for (line, f), y in zip(lines, baselines, strict=True):
+        draw.text((1 - x0, 1 - y0 + y), line, font=f, fill=255, anchor="ms")
     return mask.point(lambda v: 255 if v > _CUTOFF else 0) if flat else mask
 
 

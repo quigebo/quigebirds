@@ -95,8 +95,8 @@ How the birds are arranged on the page. Default is **Spiral**.
 **Show species names** turns the labels on and off, same as **B** on the panel.
 
 Names come from BirdNET-Go, one dictionary per language. Pick a **primary
-language** and optionally a second, which stacks underneath in parentheses. Only
-downloaded dictionaries are offered - on a fresh install that may be the
-scientific name alone.
+language** and optionally a second, which stacks underneath, smaller, in
+parentheses. Only downloaded dictionaries are offered - on a fresh install that
+may be the scientific name alone.
 
 **Typeface** and **size** apply to every label.
