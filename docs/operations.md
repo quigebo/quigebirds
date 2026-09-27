@@ -37,7 +37,7 @@ To update by hand, using the version shown in the admin page:
 
 ```bash
 ssh <user>@<host>.local
-cd ~/fugleramme
+cd ~/quigebirds
 git fetch --tags
 git checkout <version>
 uv sync
@@ -50,7 +50,7 @@ sudo systemctl restart fugleramme-frame
 
 ```bash
 ssh <user>@<host>.local
-cd ~/fugleramme
+cd ~/quigebirds
 ./run.sh
 ```
 
@@ -63,7 +63,7 @@ runs it. Both are located in `frame.env`:
 
 ```bash
 ssh <user>@<host>.local
-cd ~/fugleramme
+cd ~/quigebirds
 nano frame.env
 ./run.sh
 ```

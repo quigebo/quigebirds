@@ -49,8 +49,8 @@ DEFAULT_DETECTOR_URL = f"http://127.0.0.1:{BIRDNET_PORT}"
 DOCS_URL = "https://arnegiacomo.dev/fugleramme/"
 
 # Self-update source. HTTPS, not the ssh origin: a service fetch has no agent.
-REPO_HTTPS_URL = "https://github.com/arnegiacomo/fugleramme.git"
-RELEASES_API = "https://api.github.com/repos/arnegiacomo/fugleramme/releases/latest"
+REPO_HTTPS_URL = "https://github.com/quigebo/quigebirds.git"
+RELEASES_API = "https://api.github.com/repos/quigebo/quigebirds/releases/latest"
 
 # Repo root: src/fugleramme/config.py -> repo root is three parents up.
 REPO_ROOT = Path(__file__).resolve().parents[2]

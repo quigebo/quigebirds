@@ -24,7 +24,7 @@ sudo timedatectl set-ntp true
 If the repository was successfully cloned but failed on setup:
 
 ```bash
-~/fugleramme/install.sh
+~/quigebirds/install.sh
 ```
 
 It reuses the checkout and skips setup that is already complete (idempotent).
@@ -82,7 +82,7 @@ SSH keeps working - `10.12.194.1` is a directly connected route.
 
 ```bash
 ssh <user>@<host>.local
-cd ~/fugleramme
+cd ~/quigebirds
 uv run fugleramme-check
 ```
 
@@ -109,7 +109,7 @@ Set a new password in the settings file:
 
 ```bash
 ssh <user>@<host>.local
-nano ~/fugleramme/detector/data/settings.json   # "admin_password": "a-new-one"
+nano ~/quigebirds/detector/data/settings.json   # "admin_password": "a-new-one"
 ```
 
 The frame reads the file as you save it (no restart needed). Keep it valid
@@ -159,7 +159,7 @@ Try to rebuild the environment:
 
 ```bash
 ssh <user>@<host>.local
-cd ~/fugleramme
+cd ~/quigebirds
 rm -rf .venv
 uv sync --extra panel
 sudo systemctl restart fugleramme-frame

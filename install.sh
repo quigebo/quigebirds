@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # One-command bootstrap for a fresh Pi:
-#   curl -fsSL https://raw.githubusercontent.com/arnegiacomo/fugleramme/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/quigebo/quigebirds/main/install.sh | bash
 # Clones the repo, installs missing dependencies, optionally enables USB gadget
 # mode, then hands off to run.sh. The split is the reboot: what only takes effect
 # on boot lives here, what is safe to re-run against a live frame lives in run.sh.
@@ -8,8 +8,8 @@
 set -euo pipefail
 export PATH="$HOME/.local/bin:$PATH"
 
-REPO_URL="https://github.com/arnegiacomo/fugleramme.git"
-REPO_DIR="${FUGLERAMME_DIR:-$HOME/fugleramme}"
+REPO_URL="https://github.com/quigebo/quigebirds.git"
+REPO_DIR="${FUGLERAMME_DIR:-$HOME/quigebirds}"
 REPO_REF="${FUGLERAMME_REF:-main}"
 ASSUME_YES=0
 DROP_BUNDLED=0

@@ -31,7 +31,7 @@ ssh <user>@<host>.local
 One command:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/arnegiacomo/fugleramme/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/quigebo/quigebirds/main/install.sh | bash
 ```
 
 It asks before installing anything and helps you set up the required dependencies. If no USB mic is detected, it asks whether to
