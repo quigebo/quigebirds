@@ -23,3 +23,10 @@ Covers the `web/` package.
 - The preview box takes the page's shape before a render starts: `cfg.panel` turned by the rotation in the *form*, not the one last rendered (with no panel, the form's aspect and portrait), so the species list under it holds still and moves only when the page would.
 - While the margin is dragged, the `.mat` band over the preview stands in for the render and goes when one starts. It is not shown while the preview is loading: there is no page to shade.
 - The admin is used from a remote browser against a headless Pi. Do not design flows around `file://` URLs, opening a browser on the server, or other local-GUI assumptions.
+
+## The stamp sheet (`web/stamps.py`)
+
+- The Stamps tab is the life list as a stamp album: `/stamps` is the sheet, fetched the first time the tab opens, and `/plate` and `/label-font` feed it. All three are in `GATED`.
+- A stamp shows a species' first variant, never `Picks.choose`: that writes on every roll and only the render loop's window survives `retain`, so a gallery of the whole life list would reshuffle every visit and churn `artwork.json`.
+- `/plate` takes a name off the query string and `_shape` does not strip `../`, so `stamps.plate` answers only a file sitting directly in the style's `birds/`.
+- The issue is the plate's `source_of`, its ink a hash of that key, so a hand-filled style gets colours without a table. Landscape plates span two grid columns and `dense` flow packs the rest round them - no JS packer.

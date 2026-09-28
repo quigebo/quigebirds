@@ -16,6 +16,16 @@ Four buttons down the back edge of the panel:
 These settings are saved and will override any settings set in the admin panel.
 Give the panel up to a minute to catch up - it redraws slowly.
 
+## Stamps
+
+The admin page's Stamps tab keeps a stamp for every bird the station has ever
+heard, numbered in the order they first turned up and postmarked with that day.
+Each stamp carries the plate the bird is drawn from, and the book the plate
+comes from is its issue, printed in its own colour. Click a stamp for when the
+bird was first and last heard, how often, and a link to the original plate.
+
+A bird with no artwork in the current style still gets its stamp, left blank.
+
 ## Updates
 
 The frame checks GitHub hourly for new releases and shows it on the admin

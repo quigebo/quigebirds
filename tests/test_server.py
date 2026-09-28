@@ -128,6 +128,9 @@ BROWSER = {"Accept": "text/html,application/xhtml+xml"}
         ("/preview.png", "image/png"),
         ("/state", "application/json"),
         ("/species", "application/json"),
+        ("/stamps", "text/html; charset=utf-8"),
+        ("/plate?name=Turdus%20merula", "image/png"),
+        ("/label-font", "font/ttf"),
         ("/update", "application/json"),
         ("/health", "text/plain"),
     ],
@@ -224,6 +227,25 @@ def test_the_species_listing_marks_what_the_collage_cannot_draw(frame):
     body = json.loads(_fetch(frame + "/species")[2])
     assert 'class="noart"' in body["html"]
     assert body["html"].count("<li") == body["count"]
+
+
+def test_every_bird_heard_gets_a_stamp_numbered_in_the_order_it_was_first_heard(frame):
+    sheet = _fetch(frame + "/stamps")[2].decode()
+    numbers = [int(n) for n in re.findall(r'data-no="(\d+)"', sheet)]
+    assert numbers == list(range(1, len(numbers) + 1))
+    # The fixture's plates are landscape, and it draws few of the fake's birds:
+    # the rest are still stamped, with no plate.
+    plated, blank = sheet.count('class="stamp wide"'), sheet.count('class="stamp blank"')
+    assert plated and blank
+    assert plated + blank == len(numbers)
+
+
+def test_a_plate_is_only_served_from_the_style_s_own_birds(frame, tmp_path):
+    (tmp_path / "images" / "classic" / "secret.png").write_bytes(b"not a bird")
+    assert _fetch(frame + "/plate?name=Parus%20major")[0] == 200
+    assert _fetch(frame + "/plate?name=../secret")[0] == 404
+    assert _fetch(frame + "/plate?name=Nobody%20here")[0] == 404
+    assert _fetch(frame + "/plate")[0] == 404
 
 
 def test_the_connection_test_answers_over_the_wire(frame):

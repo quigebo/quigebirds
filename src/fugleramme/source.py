@@ -38,6 +38,8 @@ class Detection:
 class Species:
     scientific_name: str
     first_seen: datetime
+    last_seen: datetime
+    count: int
 
 
 class Source(Protocol):
@@ -57,7 +59,7 @@ class Source(Protocol):
         ...
 
     def life_list(self) -> list[Species]:
-        """Every species ever recorded with the date it was first heard, earliest first."""
+        """Every species ever recorded, earliest first heard first."""
         ...
 
     def stats(self) -> dict: ...

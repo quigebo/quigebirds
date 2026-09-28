@@ -43,11 +43,12 @@ from .. import __version__, modes, updates
 from ..languages import namer
 from ..panel import Panel, resolution_of
 from ..picks import Picks
+from ..render.fonts import DEFAULT_FONT, FONTS, FONTS_DIR
 from ..render.paper import paper_tile
 from ..settings import Settings, SettingsStore, merged
 from ..source import Source, Unavailable
 from ..status import Status
-from . import LOGIN, LOGOUT, STATIC_DIR, admin
+from . import LOGIN, LOGOUT, STATIC_DIR, admin, stamps
 
 log = logging.getLogger(__name__)
 
@@ -58,7 +59,19 @@ JSON = "application/json"
 
 # What a password covers (#52). The kiosk stays open whatever is set: it is the
 # product, and the demo page and the container's healthcheck read it as strangers.
-GATED = frozenset({"/admin", "/preview.png", "/species", "/update", "/detector", LOGOUT})
+GATED = frozenset(
+    {
+        "/admin",
+        "/preview.png",
+        "/species",
+        "/stamps",
+        "/plate",
+        "/label-font",
+        "/update",
+        "/detector",
+        LOGOUT,
+    }
+)
 
 COOKIE = "fugleramme_session"
 SESSION_SECONDS = 7 * 24 * 60 * 60  # a week, the session BirdNET-Go hands out
@@ -380,6 +393,22 @@ def make_handler(
                 JSON,
             )
 
+        def _stamps(self):
+            self._send(200, stamps.sheet(self._context(store.get())).encode(), HTML)
+
+        def _plate(self):
+            name = self._query().get("name", [""])[0]
+            path = stamps.plate(self._context(store.get()), name) if name else None
+            if path is None:
+                self._send(404, b"no plate", "text/plain")
+                return
+            self._send_cached(path.read_bytes(), f"image/{path.suffix[1:]}")
+
+        def _label_font(self):
+            # The stamps are set in the face the collage labels are.
+            _label, filename = FONTS.get(store.get().label_font, FONTS[DEFAULT_FONT])
+            self._send_cached((FONTS_DIR / filename).read_bytes(), "font/ttf")
+
         def _paper(self):
             self._send_cached(paper_png(), "image/png")
 
@@ -392,6 +421,9 @@ def make_handler(
             "/state": _state,
             "/paper.png": _paper,
             "/species": _species,
+            "/stamps": _stamps,
+            "/plate": _plate,
+            "/label-font": _label_font,
             "/admin": _admin,
             "/update": _update,
             "/health": _health,

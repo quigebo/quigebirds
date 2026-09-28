@@ -397,7 +397,12 @@ class ApiSource:
     def life_list(self) -> list[Species]:
         try:
             species = [
-                Species(row["scientific_name"], _aware(datetime.fromisoformat(row["first_heard"])))
+                Species(
+                    row["scientific_name"],
+                    _aware(datetime.fromisoformat(row["first_heard"])),
+                    _aware(datetime.fromisoformat(row.get("last_heard") or row["first_heard"])),
+                    int(row.get("count") or 0),
+                )
                 for row in self._summary()
                 if row.get("first_heard")
             ]

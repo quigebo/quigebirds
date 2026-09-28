@@ -13,6 +13,7 @@
 </header>
 <nav class="tabs" role="tablist">
   <button type="button" role="tab" data-tab="settings">Display</button>
+  <button type="button" role="tab" data-tab="stamps">Stamps</button>
   <button type="button" role="tab" data-tab="detector">Detector</button>
   <button type="button" role="tab" data-tab="security">Security</button>
   <button type="button" role="tab" data-tab="system">System</button>
@@ -47,6 +48,20 @@
     <h2>On the page (<span id="count">$species_count</span>)</h2>
     <ul class="species" id="species">$species_rows</ul>
   </aside>
+</section>
+<section id="tab-stamps" hidden>
+  <div class="album">
+    <h2>Every bird heard <small id="tally"></small></h2>
+    <label class="order"><span>Arrange by</span>
+      <select id="order">
+        <option value="no">Life list</option>
+        <option value="issue">Issue</option>
+        <option value="name">Name</option>
+        <option value="count">Most heard</option>
+      </select></label>
+  </div>
+  <ul class="sheet" id="sheet"><li class="empty"><span class="spinner inline"></span> Fetching the sheet…</li></ul>
+  <dialog id="postcard"><form method="dialog"><button class="close" aria-label="Close">×</button></form><div id="card"></div></dialog>
 </section>
 <section id="tab-detector" hidden>
   <h2>BirdNET-Go</h2>

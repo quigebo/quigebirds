@@ -340,3 +340,59 @@ window.addEventListener("beforeunload", (e) => {
 
 loadPreview();
 if (scrolled !== null) window.scrollTo(0, Number(scrolled));
+
+// The sheet is fetched the first time its tab opens: a hundred plates are not
+// worth loading for a visit to change a setting.
+const sheet = document.getElementById("sheet");
+const order = document.getElementById("order");
+const postcard = document.getElementById("postcard");
+const BY = {
+  no: (a, b) => a.dataset.no - b.dataset.no,
+  name: (a, b) => a.dataset.name.localeCompare(b.dataset.name),
+  count: (a, b) => b.dataset.count - a.dataset.count || a.dataset.no - b.dataset.no,
+  // Unissued stamps, the birds with no plate, close the sheet.
+  issue: (a, b) => !a.dataset.issue - !b.dataset.issue
+    || a.dataset.issue.localeCompare(b.dataset.issue) || a.dataset.no - b.dataset.no,
+};
+order.value = localStorage.getItem("order") in BY ? localStorage.getItem("order") : "no";
+const arrange = () => sheet.append(...[...sheet.querySelectorAll("li.stamp")].sort(BY[order.value]));
+order.addEventListener("change", () => {
+  localStorage.setItem("order", order.value);
+  arrange();
+});
+
+let fetched = false;
+async function loadSheet() {
+  if (fetched) return;
+  fetched = true;
+  try {
+    const answer = await fetch("/stamps", {cache: "no-store"});
+    if (signedOut(answer)) return;
+    if (!answer.ok) throw new Error(answer.status);
+    sheet.innerHTML = await answer.text();
+  } catch (e) {
+    fetched = false;  // the next visit to the tab tries again
+    sheet.innerHTML = '<li class="problem">The detector did not answer. See the Detector tab.</li>';
+    return;
+  }
+  const stamps = sheet.querySelectorAll("li.stamp");
+  const issues = new Set([...stamps].map((s) => s.dataset.issue).filter(Boolean));
+  document.getElementById("tally").textContent = stamps.length
+    ? `${stamps.length} stamps · ${issues.size} issues` : "";
+  arrange();
+}
+
+sheet.addEventListener("click", (e) => {
+  const face = e.target.closest(".face");
+  if (!face) return;
+  const stamp = face.closest("li");
+  const card = document.getElementById("card");
+  card.style.setProperty("--ink", stamp.style.getPropertyValue("--ink"));
+  card.innerHTML = stamp.querySelector("template").innerHTML;
+  postcard.showModal();
+});
+document.querySelector("button[data-tab=stamps]").addEventListener("click", loadSheet);
+if (!document.getElementById("tab-stamps").hidden) loadSheet();  // the remembered tab
+
+// A click on the backdrop lands on the dialog itself, outside the card.
+postcard.addEventListener("click", (e) => { if (e.target === postcard) postcard.close(); });
