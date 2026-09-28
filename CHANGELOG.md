@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.27.0 (2026-09-28)
+
+### Features
+
+- **admin**: Add a stamp sheet of every bird heard
+  ([`8d64e00`](https://github.com/quigebo/quigebirds/commit/8d64e000c0668d281e36a9829877d91ff7a2924f))
+
+
 ## v0.26.0 (2026-09-27)
 
 ### Chores
