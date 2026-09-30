@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.27.1 (2026-09-30)
+
+### Bug Fixes
+
+- **web**: Show Quigebirds as the display name
+  ([`70729fa`](https://github.com/quigebo/quigebirds/commit/70729fa07200beb07761e6d9f1895fed9c104517))
+
+
 ## v0.27.0 (2026-09-28)
 
 ### Features
