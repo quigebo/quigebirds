@@ -115,7 +115,7 @@ def run(config: Config) -> None:
     # `kill -USR1 <pid>` dumps every thread's stack to the journal - for when it wedges.
     faulthandler.register(signal.SIGUSR1, all_threads=True)
 
-    log.info("Fugleramme v%s", __version__)
+    log.info("Quigebirds v%s", __version__)
 
     panel = init_panel()
     store, source = detector(config)
